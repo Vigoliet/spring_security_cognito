@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: spring_security_cognito_240424
+  security:
+    oauth2:
+      client:
+        registration:
+          cognito:
+            clientId: ${clientId}
+            clientSecret: ${clientSecret}
+            scope: openid
+            redirect-uri: http://localhost:8080/login/oauth2/code/cognito
+            clientName: vigor-bat-day
+        provider:
+          cognito:
+            issuerUri: ${issuerUri}
+            user-name-attribute: username
