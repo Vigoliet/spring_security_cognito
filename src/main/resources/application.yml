@@ -6,12 +6,17 @@ spring:
       client:
         registration:
           cognito:
-            clientId: ${clientId}
-            clientSecret: ${clientSecret}
+            clientId: ${spring.security.oauth2.client.registration.cognito.clientId}
+            clientSecret: ${spring.security.oauth2.client.registration.cognito.clientSecret}
             scope: openid
             redirect-uri: http://localhost:8080/login/oauth2/code/cognito
             clientName: vigor-bat-day
         provider:
           cognito:
-            issuerUri: ${issuerUri}
+            issuerUri: ${spring.security.oauth2.client.provider.cognito.issuerUri}
             user-name-attribute: username
+aws:
+  cognito:
+    poolId: ${aws.cognito.poolId}
+    registration:
+      clientId: ${aws.cognito.registration.clientId}

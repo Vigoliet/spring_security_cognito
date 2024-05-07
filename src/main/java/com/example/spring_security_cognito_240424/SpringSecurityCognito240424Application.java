@@ -10,19 +10,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringSecurityCognito240424Application {
 
 	public static void main(String[] args) {
+
 		Dotenv dotenv = Dotenv.load();
-		String clientId = dotenv.get("CLIENT_ID");
-		System.out.println("Client ID: " + clientId);
 
-		String clientSecret = dotenv.get("CLIENT_SECRET");
-		System.out.println("Client Secret: " + clientSecret);
+		System.setProperty("spring.security.oauth2.client.registration.cognito.clientId", dotenv.get("CLIENT_ID"));
+		System.setProperty("spring.security.oauth2.client.registration.cognito.clientSecret", dotenv.get("CLIENT_SECRET"));
+		System.setProperty("spring.security.oauth2.client.provider.cognito.issuerUri", dotenv.get("ISSUER_URI"));
+		System.setProperty("aws.cognito.poolId", dotenv.get("POOL_ID"));
+		System.setProperty("aws.cognito.registration.clientId", dotenv.get("CLIENT_ADMIN_ID"));
 
-		String issuerUri = dotenv.get("ISSUER_URI");
-		System.out.println("IssuerURI: " +issuerUri);
-
-		System.setProperty("clientId", clientId);
-		System.setProperty("clientSecret", clientSecret);
-		System.setProperty("issuerUri", issuerUri);
 
 		SpringApplication.run(SpringSecurityCognito240424Application.class, args);
 	}
