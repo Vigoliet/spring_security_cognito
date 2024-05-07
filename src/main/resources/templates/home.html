@@ -1,53 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Home page</title>
-    <style>
-        body {
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        p {
-            color: #666;
-        }
-    </style>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Spring Cognito Home</title>
 </head>
 <body>
-<nav th:if="${loggedIn}">
-    <a href="/test">Test Page</a>
-</nav>
 
-<h1>Welcome home page</h1>
+<h1>Spring Cognito Home</h1>
 
-<p>Welcome to the homepage</p>
-<p>Vigoliet was here</p>
+<p>This is my home page, welcome home!</p>
 
+<div sec:authorize="isAuthenticated()">
+    <div class="box">
+        Hello, <strong th:text="${#authentication.name}"></strong>!
 
+        <form action="/logout" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <button type="submit">Log out</button>
+        </form>
+    </div>
+</div>
 
-<p th:if="${loggedIn}">
-    Username:
-    <b th:text="${username}"></b>
-</p>
-
-<form action="/logout" method="post" th:if="${loggedIn}">
-    <input
-            type="hidden"
-            th:name="${_csrf.parameterName}"
-            th:value="${_csrf.token}"/>
-
-    <input type="submit" value="Logout">
-</form>
-
-<p th:unless="${loggedIn}">
-    <a href="/login">Log in</a>
-</p>
-
+<div sec:authorize="isAnonymous()">
+    <ul class="box">
+        <li>
+            <a th:href="@{/oauth2/authorization/cognito}">Log in with Amazon Cognito</a>
+        </li>
+        <li>
+            <a href="/sign-up">Sign up</a>
+        </li>
+    </ul>
+</div>
 
 
 </body>

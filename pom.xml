@@ -66,6 +66,13 @@
 			<version>5.2.2</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/software.amazon.awssdk/cognitoidentityprovider -->
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>cognitoidentityprovider</artifactId>
+			<version>2.25.45</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -5,9 +5,17 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Test Page</title>
+    <title>Spring Cognito Test</title>
 </head>
 <body>
-<p>This is my test page</p>
+<h1>Spring Cognito Test</h1>
+<p>This is my test page, welcome!</p>
+
+<form action="/test" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <button type="submit">Post test</button>
+</form>
+
+
 </body>
 </html>
