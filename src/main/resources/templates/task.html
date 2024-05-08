@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -38,32 +38,26 @@
     <a href="/tasks">Tasks</a>
     <a href="/delete-account">Delete Account</a>
 </div>
+<h1>Create Task</h1>
+<p>Enter the details of the task you want to create:</p>
 
-<h1>Spring Cognito Home</h1>
+<form action="/tasks" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <label for="description">Task Description:</label><br>
+    <input type="text" id="description" name="description" required><br>
+    <button type="submit">Create Task</button>
+</form>
 
-<p>This is my home page, welcome home!</p>
-
-<div sec:authorize="isAuthenticated()">
-    <div class="box">
-        Hello, <strong th:text="${#authentication.name}"></strong>!
-
-        <form action="/logout" method="post">
+<h2>Your Tasks</h2>
+<ul>
+    <li th:each="task : ${tasks}">
+        <span th:text="${task.description}"></span>
+        <form th:action="@{/tasks/delete/{id}(id=${task.id})}" method="post">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <button type="submit">Log out</button>
+            <button type="submit">Delete</button>
         </form>
-    </div>
-</div>
-
-<div sec:authorize="isAnonymous()">
-    <ul class="box">
-        <li>
-            <a th:href="@{/oauth2/authorization/cognito}">Log in with Amazon Cognito</a>
-        </li>
-        <li>
-            <a href="/sign-up">Sign up</a>
-        </li>
-    </ul>
-</div>
+    </li>
+</ul>
 
 </body>
 </html>

@@ -19,6 +19,9 @@ public class SpringSecurityCognito240424Application {
 		System.setProperty("aws.cognito.poolId", dotenv.get("POOL_ID"));
 		System.setProperty("aws.cognito.registration.clientId", dotenv.get("CLIENT_ADMIN_ID"));
 
+		System.setProperty("spring.datasource.url", dotenv.get("DATABASE_URL"));
+		System.setProperty("spring.datasource.username", dotenv.get("DATABASE_USERNAME"));
+		System.setProperty("spring.datasource.password", dotenv.get("DATABASE_PASSWORD"));
 
 		SpringApplication.run(SpringSecurityCognito240424Application.class, args);
 	}
