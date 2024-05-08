@@ -1,11 +1,16 @@
 package com.example.spring_security_cognito_240424.controllers;
 
+import com.example.spring_security_cognito_240424.models.Task;
 import com.example.spring_security_cognito_240424.repositories.TaskRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient;
@@ -13,6 +18,9 @@ import software.amazon.awssdk.services.cognitoidentityprovider.model.AdminDelete
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class AccountController {
@@ -24,8 +32,16 @@ public class AccountController {
     }
 
     @GetMapping("/delete-account")
-    public String getDeleteAccountPage(){
-        return "delete-account";
+    public String getDeleteAccountPage(Model model, HttpServletResponse response) throws IOException, IOException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof OidcUser) {
+            OidcUser user = (OidcUser) authentication.getPrincipal();
+            model.addAttribute("oidcUser", user);
+            return "delete-account";
+        } else {
+            response.sendRedirect("/oauth2/authorization/cognito");
+            return null;
+        }
     }
 
     @PostMapping("/delete-account")
