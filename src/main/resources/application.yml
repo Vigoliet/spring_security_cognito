@@ -16,9 +16,9 @@ spring:
             issuerUri: ${spring.security.oauth2.client.provider.cognito.issuerUri}
             user-name-attribute: username
   datasource:
-    url: jdbc:mysql://localhost:3306/tasks_cognito
-    username: root
-    password: root
+    url: ${spring.datasource.url}
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
   jpa:
     hibernate:
       ddl-auto: update
